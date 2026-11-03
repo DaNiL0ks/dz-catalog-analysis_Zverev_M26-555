@@ -129,6 +129,33 @@ def top_n_by_rating(movies, n=3):
     title_rating_pairs = [(movie["title"], movie["rating"]) for movie in sorted_movies]
     return title_rating_pairs
 
+#---------- № 6
+
+def count_by_genre(movies):
+    genre_count = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            genre_count[genre] = genre_count.get(genre, 0) + 1
+    return genre_count
+
+def actor_filmography(movies):
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            if actor not in filmography:
+                filmography[actor] = []
+            filmography[actor].append(movie["title"])
+    return filmography
+
+def ratings_above_average(movies):
+    average = average_rating(movies)
+    title_rating = {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > average
+    }
+    return title_rating
+
 if __name__ == "__main__":
     print("Средний рейтинг:", average_rating(movies))
     print("Возраст фильмов:", catalog_age_stats(movies))
@@ -165,3 +192,9 @@ if __name__ == "__main__":
     print(top_n_by_rating(movies))
     print(top_n_by_rating(movies, 0))   # []
     print(top_n_by_rating([]))         # []
+
+    print(count_by_genre(movies))
+    print(actor_filmography(movies))
+    print(actor_filmography(movies)["A. Novak"])
+    print(ratings_above_average(movies))
+
