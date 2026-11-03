@@ -28,6 +28,8 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ]
 
+#---------- № 1
+
 def average_rating(movies):
     total_rating = sum(movie["rating"] for movie in movies)
     return round(total_rating / len(movies), 1) if movies else 0  
@@ -52,6 +54,8 @@ def duration_in_hours(minutes):
 
     return f"{hours}ч {remaining_minutes}м"
 
+#---------- № 2
+
 def rating_tier(rating):
     if rating >= 9: 
         return "шедевр"
@@ -67,6 +71,8 @@ def decade_label(year):
             return "недавние"
         case _ if year < 2015:
             return "старые"
+
+#---------- № 3
 
 def print_non_comedy(movies):
     for movie in movies:
@@ -90,6 +96,29 @@ def count_long_movies(movies, threshold=120):
         if movie["duration_min"] > threshold:
             count += 1
     return count
+
+#---------- № 4
+
+def normalize_title(title):
+    words = title.split()
+    normalized_words = [word[0].upper() + word[1:] for word in words]
+    return " ".join(normalized_words)
+
+def make_slug(title):
+    title = normalize_title(title)
+    title = title.lower()
+    title = title.replace(" ", "-")
+    return title
+
+def format_report_line(movie):
+    title = normalize_title(movie["title"])
+    year = movie["year"]
+    rating = movie["rating"]
+    duration = duration_in_hours(movie["duration_min"])
+    genres = ", ".join(sorted(movie["genres"]))
+    return f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres}'
+
+#---------- № 5
 
 if __name__ == "__main__":
     print("Средний рейтинг:", average_rating(movies))
@@ -115,3 +144,10 @@ if __name__ == "__main__":
     print(count_long_movies(movies, 155))  # 0
     print(count_long_movies([])) 
 
+    print(normalize_title("good morning"))
+    print(make_slug("Good Morning"))
+    print(format_report_line(movies[0]))
+    print(normalize_title("  silent   hours  "))  # Silent Hours
+    print(normalize_title(""))                   # пустая строка
+    print(make_slug("midnight in oslo"))         # midnight-in-oslo
+    print(format_report_line(movies[7]))
