@@ -174,9 +174,12 @@ def genres_only_in_one(movies_a, movies_b):
     genres_b = all_genres(movies_b)
     return genres_a - genres_b
 
-#---------- № 7
+#---------- № 8
 
-
+def iter_high_rated(movies, min_rating=8.0):
+    for movie in movies:
+        if movie["rating"] >= min_rating:
+            yield movie
 
 if __name__ == "__main__":
     print("Средний рейтинг:", average_rating(movies))
@@ -227,4 +230,6 @@ if __name__ == "__main__":
     print(all_genres([]))                           # set()
     print(genres_only_in_one(movies, movies))       # set()
 
-    
+    for movie in iter_high_rated(movies):
+        print(format_report_line(movie))
+    print(sum(m["duration_min"] for m in movies if m["rating"] > 7))
