@@ -120,6 +120,15 @@ def format_report_line(movie):
 
 #---------- № 5
 
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)[:n]
+    title_rating_pairs = [(movie["title"], movie["rating"]) for movie in sorted_movies]
+    return title_rating_pairs
+
 if __name__ == "__main__":
     print("Средний рейтинг:", average_rating(movies))
     print("Возраст фильмов:", catalog_age_stats(movies))
@@ -151,3 +160,8 @@ if __name__ == "__main__":
     print(normalize_title(""))                   # пустая строка
     print(make_slug("midnight in oslo"))         # midnight-in-oslo
     print(format_report_line(movies[7]))
+
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies))
+    print(top_n_by_rating(movies, 0))   # []
+    print(top_n_by_rating([]))         # []
