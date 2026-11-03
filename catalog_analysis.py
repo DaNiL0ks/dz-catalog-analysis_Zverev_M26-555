@@ -156,6 +156,28 @@ def ratings_above_average(movies):
     }
     return title_rating
 
+#---------- № 7
+
+def all_genres(movies):
+    genres = set()
+    for movie in movies:
+        genres.update(movie["genres"])
+    return genres
+
+def common_actors(movie1, movie2):
+    actors1 = set(movie1["actors"])
+    actors2 = set(movie2["actors"])
+    return actors1 & actors2
+
+def genres_only_in_one(movies_a, movies_b):
+    genres_a = all_genres(movies_a)
+    genres_b = all_genres(movies_b)
+    return genres_a - genres_b
+
+#---------- № 7
+
+
+
 if __name__ == "__main__":
     print("Средний рейтинг:", average_rating(movies))
     print("Возраст фильмов:", catalog_age_stats(movies))
@@ -196,5 +218,13 @@ if __name__ == "__main__":
     print(count_by_genre(movies))
     print(actor_filmography(movies))
     print(actor_filmography(movies)["A. Novak"])
+
     print(ratings_above_average(movies))
 
+    print(all_genres(movies))                       # 6 уникальных жанров
+    print(common_actors(movies[0], movies[3]))       # {'O. Isaac'}
+    print(genres_only_in_one(movies[5:6], movies[:5]))  # {'mystery'}
+    print(all_genres([]))                           # set()
+    print(genres_only_in_one(movies, movies))       # set()
+
+    
